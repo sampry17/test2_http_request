@@ -3,6 +3,10 @@ from selenium.webdriver.chrome.service import Service
 from config import path_driver
 from fake_useragent import UserAgent
 from json import loads
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 
 def get_chromedriver():
@@ -24,6 +28,7 @@ def token_auth():
     try:
         with get_chromedriver() as browser:
             url = 'https://www.maxmind.com/en/locate-my-ip-address'
+            logger.info('getting a token...')
             browser.get(url=url)
 
             for request in browser.requests:
@@ -34,10 +39,11 @@ def token_auth():
             if post_request:
                 response = post_request.response
                 token = loads(response.body)['token']
+                logger.info('token received!')
 
             return token
     except Exception as e:
-        print(e)
+        logger.info(f'Error getting token: {e}')
 
 
 

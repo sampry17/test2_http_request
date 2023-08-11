@@ -51,8 +51,10 @@ def get_ip(url, session):
 
 
 def get_time_zone_name(url, session):
+    token = token_auth()
+
     headers_update = {
-        "Authorization": f"Bearer {token_auth()}",
+        "Authorization": f"Bearer {token}",
     }
 
     session.headers |= headers_update
