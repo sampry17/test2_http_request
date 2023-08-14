@@ -9,7 +9,7 @@ async def get_csrf(session):
             print(f'Статус ошибки: {response.status}')
             return None
         page = await response.text()
-    soup = BeautifulSoup(page, "html.parser")
+    soup = BeautifulSoup(page, "lxml")
     element = soup.find('script', string=re.compile("X_CSRF_TOKEN"))
     if not element:
         return None
