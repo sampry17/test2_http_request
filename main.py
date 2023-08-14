@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 from config import login, password, proxy_host, proxy_port
-from get_token import token_auth
+from auth_token import auth_token
+import asyncio
 
 
 def get_session():
@@ -51,8 +52,7 @@ def get_ip(url, session):
 
 
 def get_time_zone_name(url, session):
-    token = token_auth()
-
+    token = asyncio.run(auth_token())
     headers_update = {
         "Authorization": f"Bearer {token}",
     }
